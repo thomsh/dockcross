@@ -27,6 +27,7 @@ RUN \
     ncurses-dev \
     pkg-config \
     libtool \
+    libtool-bin \
     python \
     python-pip \
     rsync \
