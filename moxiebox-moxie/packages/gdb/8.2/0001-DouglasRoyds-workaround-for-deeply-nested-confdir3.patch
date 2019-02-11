@@ -1,0 +1,32 @@
+From 2034661b49cb1e5e3411260eaf000bbc4d35d80f Mon Sep 17 00:00:00 2001
+From: Franck <franck.sehedic@ledger.fr>
+Date: Sat, 9 Feb 2019 20:37:09 +0100
+Subject: [PATCH] DouglasRoyds workaround for deeply nested confdir3
+
+---
+ gdb/gnulib/import/m4/getcwd-path-max.m4 | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/gdb/gnulib/import/m4/getcwd-path-max.m4 b/gdb/gnulib/import/m4/getcwd-path-max.m4
+index 90bbc77..910292f 100644
+--- a/gdb/gnulib/import/m4/getcwd-path-max.m4
++++ b/gdb/gnulib/import/m4/getcwd-path-max.m4
+@@ -189,6 +189,15 @@ main ()
+ 
+     /* Try rmdir first, in case the chdir failed.  */
+     rmdir (DIR_NAME);
++    /* Getting rid of the very bottom dirs inside a Docker container is tricky */
++    if (chdir ("../../..") < 0) exit (errno);
++    rename (DIR_NAME"/"DIR_NAME"/"DIR_NAME, "b");
++    rename (DIR_NAME"/"DIR_NAME, "c");
++    rename (DIR_NAME, "d");
++    rmdir ("b");
++    rmdir ("c");
++    rmdir ("d");
++    /* Now for the rest */
+     for (i = 0; i <= n_chdirs; i++)
+       {
+         if (chdir ("..") < 0)
+-- 
+2.17.1
+
