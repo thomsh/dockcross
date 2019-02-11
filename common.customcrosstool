@@ -23,6 +23,7 @@ RUN apt-get update --yes && apt-get install --no-install-recommends --yes \
   texinfo \
   unzip \
   device-tree-compiler \
+  libtool-bin \
 && apt-get clean --yes
 
 ENV XCC_PREFIX=/usr/xcc
@@ -37,13 +38,20 @@ COPY \
   crosstool-ng.config \
   /dockcross/
 
+COPY \
+  packages \
+  /dockcross/packages
+
 # Build and install the toolchain, cleaning up artifacts afterwards.
 RUN mkdir /dockcross/crosstool \
 && cd /dockcross/crosstool \
 && /dockcross/install-crosstool-ng-toolchain-custom.sh \
   -p "${XCC_PREFIX}" \
   -c /dockcross/crosstool-ng.config \
-&& rm -rf /dockcross/crosstool /dockcross/install-crosstool-ng-toolchain-custom.sh
+&& cp /dockcross/crosstool/toolchain/build.log /dockcross \
+&& tobedeleted=/dockcross/crosstool/toolchain/.build/moxie-none-moxiebox/build/build-gdb-cross/gdb/build-gnulib/confdir3 \
+&& if [ -d ${tobedeleted} ]; then mv $tobedeleted /tbd; rm -rf /tbd; fi \
+&& rm -rf /dockcross/crosstool /dockcross/install-crosstool-ng-toolchain-custom.sh /dockcross/packages
 
 # Restore our default workdir (from "dockcross/base").
 WORKDIR /work

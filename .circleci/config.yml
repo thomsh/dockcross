@@ -35,7 +35,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make android-arm
-           docker save -o ~/docker/android-arm.tar dockcross/android-arm:latest
+           tagged=$(docker images -q -f 'since=dockcross/android-arm:latest' --format '{{.Repository}}:{{.Tag}}' | grep android-arm)
+           docker save -o ~/docker/android-arm.tar dockcross/android-arm:latest $tagged
       - run:
          name: android-arm test
          command: |
@@ -54,7 +55,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make android-arm64
-           docker save -o ~/docker/android-arm64.tar dockcross/android-arm64:latest
+           tagged=$(docker images -q -f 'since=dockcross/android-arm64:latest' --format '{{.Repository}}:{{.Tag}}' | grep android-arm64)
+           docker save -o ~/docker/android-arm64.tar dockcross/android-arm64:latest $tagged
       - run:
          name: android-arm64 test
          command: |
@@ -62,25 +64,26 @@ jobs:
       - save_cache:
           key: android-arm64-assets-{{ .Revision }}
           paths: ~/docker/android-arm64.tar
-  browser-asmjs:
+  web-wasm:
     <<: *build-settings
     steps:
       - restore_cache:
           key: base-assets-{{ .Revision }}
       - run:
-         name: browser-asmjs build
+         name: web-wasm build
          no_output_timeout: 1.5h
          command: |
            docker load -i ~/docker/base.tar
-           make browser-asmjs
-           docker save -o ~/docker/browser-asmjs.tar dockcross/browser-asmjs:latest
+           make web-wasm
+           tagged=$(docker images -q -f 'since=dockcross/web-wasm:latest' --format '{{.Repository}}:{{.Tag}}' | grep web-wasm)
+           docker save -o ~/docker/web-wasm.tar dockcross/web-wasm:latest $tagged
       - run:
-         name: browser-asmjs test
+         name: web-wasm test
          command: |
-           make browser-asmjs.test
+           make web-wasm.test
       - save_cache:
-          key: browser-asmjs-assets-{{ .Revision }}
-          paths: ~/docker/browser-asmjs.tar
+          key: web-wasm-assets-{{ .Revision }}
+          paths: ~/docker/web-wasm.tar
   linux-arm64:
     <<: *build-settings
     steps:
@@ -92,7 +95,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-arm64
-           docker save -o ~/docker/linux-arm64.tar dockcross/linux-arm64:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-arm64:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-arm64)
+           docker save -o ~/docker/linux-arm64.tar dockcross/linux-arm64:latest $tagged
       - run:
          name: linux-arm64 test
          command: |
@@ -111,7 +115,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-armv5
-           docker save -o ~/docker/linux-armv5.tar dockcross/linux-armv5:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-armv5:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-armv5)
+           docker save -o ~/docker/linux-armv5.tar dockcross/linux-armv5:latest $tagged
       - run:
          name: linux-armv5 test
          command: |
@@ -130,7 +135,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-armv6
-           docker save -o ~/docker/linux-armv6.tar dockcross/linux-armv6:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-armv6:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-armv6)
+           docker save -o ~/docker/linux-armv6.tar dockcross/linux-armv6:latest $tagged
       - run:
          name: linux-armv6 test
          command: |
@@ -149,7 +155,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-armv7
-           docker save -o ~/docker/linux-armv7.tar dockcross/linux-armv7:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-armv7:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-armv7)
+           docker save -o ~/docker/linux-armv7.tar dockcross/linux-armv7:latest $tagged
       - run:
          name: linux-armv7 test
          command: |
@@ -169,7 +176,8 @@ jobs:
          #command: |
            #docker load -i ~/docker/base.tar
            #make linux-mipsel
-           #docker save -o ~/docker/linux-mipsel.tar dockcross/linux-mipsel:latest
+           #tagged=$(docker images -q -f 'since=dockcross/linux-mipsel:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-mipsel)
+           #docker save -o ~/docker/linux-mipsel.tar dockcross/linux-mipsel:latest $tagged
       #- run:
          #name: linux-mipsel test
          #command: |
@@ -188,7 +196,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-s390x
-           docker save -o ~/docker/linux-s390x.tar dockcross/linux-s390x:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-s390x:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-s390x)
+           docker save -o ~/docker/linux-s390x.tar dockcross/linux-s390x:latest $tagged
       - run:
          name: linux-s390x test
          command: |
@@ -208,7 +217,8 @@ jobs:
          #command: |
            #docker load -i ~/docker/base.tar
            #make linux-ppc64le
-           #docker save -o ~/docker/linux-ppc64le.tar dockcross/linux-ppc64le:latest
+           #tagged=$(docker images -q -f 'since=dockcross/linux-ppc64le:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-ppc64le)
+           #docker save -o ~/docker/linux-ppc64le.tar dockcross/linux-ppc64le:latest $tagged
       #- run:
          #name: linux-ppc64le test
          #command: |
@@ -227,7 +237,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-x64
-           docker save -o ~/docker/linux-x64.tar dockcross/linux-x64:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-x64:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-x64)
+           docker save -o ~/docker/linux-x64.tar dockcross/linux-x64:latest $tagged
       - run:
          name: linux-x64 test
          command: |
@@ -246,7 +257,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make linux-x86
-           docker save -o ~/docker/linux-x86.tar dockcross/linux-x86:latest
+           tagged=$(docker images -q -f 'since=dockcross/linux-x86:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-x86)
+           docker save -o ~/docker/linux-x86.tar dockcross/linux-x86:latest $tagged
       - run:
          name: linux-x86 test
          command: |
@@ -265,7 +277,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make manylinux-x64
-           docker save -o ~/docker/manylinux-x64.tar dockcross/manylinux-x64:latest
+           tagged=$(docker images -q -f 'since=dockcross/manylinux-x64:latest' --format '{{.Repository}}:{{.Tag}}' | grep manylinux-x64)
+           docker save -o ~/docker/manylinux-x64.tar dockcross/manylinux-x64:latest $tagged
       - run:
          name: manylinux-x64 test
          command: |
@@ -284,7 +297,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make manylinux-x86
-           docker save -o ~/docker/manylinux-x86.tar dockcross/manylinux-x86:latest
+           tagged=$(docker images -q -f 'since=dockcross/manylinux-x86:latest' --format '{{.Repository}}:{{.Tag}}' | grep manylinux-x86)
+           docker save -o ~/docker/manylinux-x86.tar dockcross/manylinux-x86:latest $tagged
       - run:
          name: manylinux-x86 test
          command: |
@@ -303,7 +317,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make windows-x64
-           docker save -o ~/docker/windows-x64.tar dockcross/windows-x64:latest
+           tagged=$(docker images -q -f 'since=dockcross/windows-x64:latest' --format '{{.Repository}}:{{.Tag}}' | grep windows-x64)
+           docker save -o ~/docker/windows-x64.tar dockcross/windows-x64:latest $tagged
       - run:
          name: windows-x64 test
          command: |
@@ -322,7 +337,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make windows-x64-posix
-           docker save -o ~/docker/windows-x64-posix.tar dockcross/windows-x64-posix:latest
+           tagged=$(docker images -q -f 'since=dockcross/windows-x64-posix:latest' --format '{{.Repository}}:{{.Tag}}' | grep windows-x64-posix)
+           docker save -o ~/docker/windows-x64-posix.tar dockcross/windows-x64-posix:latest $tagged
       - run:
          name: windows-x64-posix test
          command: |
@@ -341,7 +357,8 @@ jobs:
          command: |
            docker load -i ~/docker/base.tar
            make windows-x86
-           docker save -o ~/docker/windows-x86.tar dockcross/windows-x86:latest
+           tagged=$(docker images -q -f 'since=dockcross/windows-x86:latest' --format '{{.Repository}}:{{.Tag}}' | grep windows-x86)
+           docker save -o ~/docker/windows-x86.tar dockcross/windows-x86:latest $tagged
       - run:
          name: windows-x86 test
          command: |
@@ -371,6 +388,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/android-arm:latest
+              tagged=$(docker images -q -f 'since=dockcross/android-arm:latest' --format '{{.Repository}}:{{.Tag}}' | grep android-arm)
+              docker push $tagged
             fi
       - restore_cache:
           key: android-arm64-assets-{{ .Revision }}
@@ -381,16 +400,20 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/android-arm64:latest
+              tagged=$(docker images -q -f 'since=dockcross/android-arm64:latest' --format '{{.Repository}}:{{.Tag}}' | grep android-arm64)
+              docker push $tagged
             fi
       - restore_cache:
-          key: browser-asmjs-assets-{{ .Revision }}
+          key: web-wasm-assets-{{ .Revision }}
       - deploy:
-          name: Deploy browser-asmjs
+          name: Deploy web-wasm
           command: |
-            docker load -i ~/docker/browser-asmjs.tar
+            docker load -i ~/docker/web-wasm.tar
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
-              docker push dockcross/browser-asmjs:latest
+              docker push dockcross/web-wasm:latest
+              tagged=$(docker images -q -f 'since=dockcross/web-wasm:latest' --format '{{.Repository}}:{{.Tag}}' | grep web-wasm)
+              docker push $tagged
             fi
       - restore_cache:
           key: linux-arm64-assets-{{ .Revision }}
@@ -401,6 +424,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-arm64:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-arm64:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-arm64)
+              docker push $tagged
             fi
       - restore_cache:
           key: linux-armv5-assets-{{ .Revision }}
@@ -411,6 +436,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-armv5:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-armv5:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-armv5)
+              docker push $tagged
             fi
       - restore_cache:
           key: linux-armv6-assets-{{ .Revision }}
@@ -421,6 +448,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-armv6:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-armv6:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-armv6)
+              docker push $tagged
             fi
       - restore_cache:
           key: linux-armv7-assets-{{ .Revision }}
@@ -431,6 +460,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-armv7:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-armv7:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-armv7)
+              docker push $tagged
             fi
       # Image build currently broken. See #209
       #- restore_cache:
@@ -442,6 +473,8 @@ jobs:
             #if [ "${CIRCLE_BRANCH}" == "master" ]; then
               #docker login -u $DOCKER_USER -p $DOCKER_PASS
               #docker push dockcross/linux-mipsel:latest
+              #tagged=$(docker images -q -f 'since=dockcross/linux-mipsel:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-mipsel)
+              #docker push $tagged
             #fi
       - restore_cache:
           key: linux-s390x-assets-{{ .Revision }}
@@ -452,6 +485,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-s390x:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-s390x:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-s390x)
+              docker push $tagged
             fi
       # Image build currently broken. See #209
       #- restore_cache:
@@ -463,6 +498,8 @@ jobs:
             #if [ "${CIRCLE_BRANCH}" == "master" ]; then
               #docker login -u $DOCKER_USER -p $DOCKER_PASS
               #docker push dockcross/linux-ppc64le:latest
+              #tagged=$(docker images -q -f 'since=dockcross/linux-ppc64le:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-ppc64le)
+              #docker push $tagged
             #fi
       - restore_cache:
           key: linux-x64-assets-{{ .Revision }}
@@ -473,6 +510,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-x64:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-x64:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-x64)
+              docker push $tagged
             fi
       - restore_cache:
           key: linux-x86-assets-{{ .Revision }}
@@ -483,6 +522,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/linux-x86:latest
+              tagged=$(docker images -q -f 'since=dockcross/linux-x86:latest' --format '{{.Repository}}:{{.Tag}}' | grep linux-x86)
+              docker push $tagged
             fi
       - restore_cache:
           key: manylinux-x64-assets-{{ .Revision }}
@@ -493,6 +534,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/manylinux-x64:latest
+              tagged=$(docker images -q -f 'since=dockcross/manylinux-x64:latest' --format '{{.Repository}}:{{.Tag}}' | grep manylinux-x64)
+              docker push $tagged
             fi
       - restore_cache:
           key: manylinux-x86-assets-{{ .Revision }}
@@ -503,6 +546,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/manylinux-x86:latest
+              tagged=$(docker images -q -f 'since=dockcross/manylinux-x86:latest' --format '{{.Repository}}:{{.Tag}}' | grep manylinux-x86)
+              docker push $tagged
             fi
       - restore_cache:
           key: windows-x64-assets-{{ .Revision }}
@@ -513,6 +558,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/windows-x64:latest
+              tagged=$(docker images -q -f 'since=dockcross/windows-x64:latest' --format '{{.Repository}}:{{.Tag}}' | grep windows-x64)
+              docker push $tagged
             fi
       - restore_cache:
           key: windows-x64-posix-assets-{{ .Revision }}
@@ -523,6 +570,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/windows-x64-posix:latest
+              tagged=$(docker images -q -f 'since=dockcross/windows-x64-posix:latest' --format '{{.Repository}}:{{.Tag}}' | grep windows-x64-posix)
+              docker push $tagged
             fi
       - restore_cache:
           key: windows-x86-assets-{{ .Revision }}
@@ -533,6 +582,8 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker push dockcross/windows-x86:latest
+              tagged=$(docker images -q -f 'since=dockcross/windows-x86:latest' --format '{{.Repository}}:{{.Tag}}' | grep windows-x86)
+              docker push $tagged
             fi
 
 workflows:
@@ -546,7 +597,7 @@ workflows:
         - android-arm64:
             requires:
               - base
-        - browser-asmjs:
+        - web-wasm:
             requires:
               - base
         - linux-arm64:
@@ -598,7 +649,7 @@ workflows:
               - base
               - android-arm
               - android-arm64
-              - browser-asmjs
+              - web-wasm
               - linux-arm64
               - linux-armv5
               - linux-armv6

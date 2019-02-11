@@ -103,12 +103,6 @@ dockcross/android-arm64
   |android-arm64-images| The Android NDK standalone toolchain for the arm64
   architecture.
 
-.. |browser-asmjs-images| image:: https://images.microbadger.com/badges/image/dockcross/browser-asmjs.svg
-  :target: https://microbadger.com/images/dockcross/browser-asmjs
-
-dockcross/browser-asmjs
-  |browser-asmjs-images| The Emscripten JavaScript cross compiler.
-
 
 .. |linux-arm64-images| image:: https://images.microbadger.com/badges/image/dockcross/linux-arm64.svg
   :target: https://microbadger.com/images/dockcross/linux-arm64
@@ -195,6 +189,13 @@ dockcross/manylinux-x64
 dockcross/manylinux-x86
   |manylinux-x86-images| Docker `manylinux <https://github.com/pypa/manylinux>`_ image for building Linux i686 `Python wheel packages <http://pythonwheels.com/>`_. It includes Python 2.7, 3.4, 3.5, 3.6 and 3.7.
   Also has support for the dockcross script, and it has installations of CMake, Ninja, and `scikit-build <http://scikit-build.org>`_
+
+
+.. |web-wasm-images| image:: https://images.microbadger.com/badges/image/dockcross/web-wasm.svg
+  :target: https://microbadger.com/images/dockcross/web-wasm
+
+dockcross/web-wasm
+  |web-wasm-images| The Emscripten WebAssembly/asm.js/JavaScript cross compiler.
 
 
 .. |windows-x64-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-x64.svg
@@ -333,10 +334,25 @@ And then in the shell::
 What is the difference between `dockcross` and `dockbuild` ?
 ------------------------------------------------------------
 
-The key difference is that `dockbuild <https://github.com/dockbuild/dockbuild#readme>`_
-images use the same method to conveniently isolate the build environment as
-`dockcross <https://github.com/dockcross/dockcross#readme>`_ but they do **NOT** provide
-a toolchain file.
+The key difference is that `dockbuild
+<https://github.com/dockbuild/dockbuild#readme>`_ images do **NOT** provide
+a `toolchain file
+<https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html>`_
+but they use the same method
+to conveniently isolate the build environment as `dockcross
+<https://github.com/dockcross/dockcross#readme>`_.
+
+`dockbuild` is used to build binaries for Linux x86_64 / amd64 that will work
+across most Linux  distributions. `dockbuild` performs a native Linux build
+where the host build system is a Linux x86_64 / amd64 Docker image (so that it
+can be used for building binaries on any system which can run Docker images)
+and the target runtime system is Linux x86_x64 / amd64.
+
+`dockcross` is used to build binaries for many different platforms.
+`dockcross` performs a cross compilation where the host build system is a
+Linux x86_64 / amd64 Docker image (so that it can be used for building
+binaries on any system which can run Docker images) and the target runtime
+system varies.
 
 
 ---

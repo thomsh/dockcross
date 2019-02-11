@@ -62,9 +62,9 @@ cd "${CTNG}"
 #   "https://github.com/crosstool-ng/crosstool-ng/archive/crosstool-ng-${REV}.tar.gz"
 # tar -xf "crosstool-ng-${REV}.tar.gz"
 # cd "crosstool-ng-crosstool-ng-${REV}"
-git clone https://github.com/LedgerHQ/crosstool-ng.git
+git clone https://github.com/crosstool-ng/crosstool-ng.git
 cd crosstool-ng
-git checkout moxie
+git checkout db4fdf015061e5c8a39cbb3c8ff4c33bea9ebdf8
 
 # Bootstrap and install the tool.
 BOOTSTRAP_PREFIX="${CTNG}/prefix"
