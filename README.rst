@@ -134,6 +134,13 @@ dockcross/linux-armv6
 dockcross/linux-armv7
   |linux-armv7-images| Generic Linux armv7 cross compiler toolchain.
 
+
+.. |linux-armv7a-images| image:: https://images.microbadger.com/badges/image/dockcross/linux-armv7a.svg
+  :target: https://microbadger.com/images/dockcross/linux-armv7a
+
+dockcross/linux-armv7a
+  |linux-armv7a-images| Toolchain configured for ARMv7-A used in Beaglebone Black single board PC with TI SoC AM3358 on board, Cortex-A8.
+
 .. |linux-mipsel-images| image:: https://images.microbadger.com/badges/image/dockcross/linux-mipsel.svg
   :target: https://microbadger.com/images/dockcross/linux-mipsel
 
@@ -179,7 +186,7 @@ dockcross/linux-x86
   :target: https://microbadger.com/images/dockcross/manylinux-x64
 
 dockcross/manylinux-x64
-  |manylinux-x64-images| Docker `manylinux <https://github.com/pypa/manylinux>`_ image for building Linux x86_64 / amd64 `Python wheel packages <http://pythonwheels.com/>`_. It includes Python 2.7, 3.4, 3.5, 3.6 and 3.7.
+  |manylinux-x64-images| Docker `manylinux <https://github.com/pypa/manylinux>`_ image for building Linux x86_64 / amd64 `Python wheel packages <http://pythonwheels.com/>`_. It includes Python 2.7, 3.4, 3.5, 3.6, 3.7 and 3.8.
   Also has support for the dockcross script, and it has installations of CMake, Ninja, and `scikit-build <http://scikit-build.org>`_
 
 
@@ -187,7 +194,7 @@ dockcross/manylinux-x64
   :target: https://microbadger.com/images/dockcross/manylinux-x86
 
 dockcross/manylinux-x86
-  |manylinux-x86-images| Docker `manylinux <https://github.com/pypa/manylinux>`_ image for building Linux i686 `Python wheel packages <http://pythonwheels.com/>`_. It includes Python 2.7, 3.4, 3.5, 3.6 and 3.7.
+  |manylinux-x86-images| Docker `manylinux <https://github.com/pypa/manylinux>`_ image for building Linux i686 `Python wheel packages <http://pythonwheels.com/>`_. It includes Python 2.7, 3.4, 3.5, 3.6, 3.7 and 3.8.
   Also has support for the dockcross script, and it has installations of CMake, Ninja, and `scikit-build <http://scikit-build.org>`_
 
 
@@ -198,25 +205,45 @@ dockcross/web-wasm
   |web-wasm-images| The Emscripten WebAssembly/asm.js/JavaScript cross compiler.
 
 
-.. |windows-x64-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-x64.svg
-  :target: https://microbadger.com/images/dockcross/windows-x64
+.. |windows-static-x64-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-static-x64.svg
+  :target: https://microbadger.com/images/dockcross/windows-static-x64
 
-dockcross/windows-x64
-  |windows-x64-images| 64-bit Windows cross-compiler based on MXE/MinGW-w64 with win32 threads.
-
-
-.. |windows-x64-posix-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-x64-posix.svg
-  :target: https://microbadger.com/images/dockcross/windows-x64-posix
-
-dockcross/windows-x64-posix
-  |windows-x64-posix-images| 64-bit Windows cross-compiler based on MXE/MinGW-w64 with posix threads.
+dockcross/windows-static-x64
+  |windows-static-x64-images| 64-bit Windows cross-compiler based on MXE/MinGW-w64 with win32 threads and static linking.
 
 
-.. |windows-x86-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-x86.svg
-  :target: https://microbadger.com/images/dockcross/windows-x86
+.. |windows-static-x64-posix-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-static-x64-posix.svg
+  :target: https://microbadger.com/images/dockcross/windows-static-x64-posix
 
-dockcross/windows-x86
-  |windows-x86-images| 32-bit Windows cross-compiler based on MXE/MinGW-w64 with win32 threads.
+dockcross/windows-static-x64-posix
+  |windows-static-x64-posix-images| 64-bit Windows cross-compiler based on MXE/MinGW-w64 with posix threads and static linking.
+
+
+.. |windows-static-x86-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-static-x86.svg
+  :target: https://microbadger.com/images/dockcross/windows-static-x86
+
+dockcross/windows-static-x86
+  |windows-static-x86-images| 32-bit Windows cross-compiler based on MXE/MinGW-w64 with win32 threads and static linking.
+
+.. |windows-shared-x64-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-shared-x64.svg
+  :target: https://microbadger.com/images/dockcross/windows-shared-x64
+
+dockcross/windows-shared-x64
+  |windows-shared-x64-images| 64-bit Windows cross-compiler based on MXE/MinGW-w64 with win32 threads and dynamic linking.
+
+
+.. |windows-shared-x64-posix-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-shared-x64-posix.svg
+  :target: https://microbadger.com/images/dockcross/windows-shared-x64-posix
+
+dockcross/windows-shared-x64-posix
+  |windows-shared-x64-posix-images| 64-bit Windows cross-compiler based on MXE/MinGW-w64 with posix threads and dynamic linking.
+
+
+.. |windows-shared-x86-images| image:: https://images.microbadger.com/badges/image/dockcross/windows-shared-x86.svg
+  :target: https://microbadger.com/images/dockcross/windows-shared-x86
+
+dockcross/windows-shared-x86
+  |windows-shared-x86-images| 32-bit Windows cross-compiler based on MXE/MinGW-w64 with win32 threads and dynamic linking.
 
 
 Articles
