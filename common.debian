@@ -4,11 +4,14 @@ COPY imagefiles/install-gosu-binary.sh /buildscripts/
 ARG DEBIAN_FRONTEND=noninteractive
 ARG REPO=http://cdn-fastly.deb.debian.org
 
+RUN echo "Acquire::Check-Valid-Until \"false\";" > /etc/apt/apt.conf
+
 RUN \
   bash -c "echo \"deb $REPO/debian jessie main contrib non-free\" > /etc/apt/sources.list"  && \
-  bash -c "echo \"deb $REPO/debian jessie-updates main contrib non-free\" >> /etc/apt/sources.list"  && \
+  #bash -c "echo \"deb $REPO/debian jessie-updates main contrib non-free\" >> /etc/apt/sources.list"  && \
   bash -c "echo \"deb $REPO/debian-security jessie/updates main\" >> /etc/apt/sources.list" && \
-  bash -c "echo \"deb http://ftp.debian.org/debian jessie-backports main\" >> /etc/apt/sources.list" && \
+  #bash -c "echo \"deb http://ftp.debian.org/debian jessie-backports main\" >> /etc/apt/sources.list" && \
+  bash -c "echo \"deb http://archive.debian.org/debian jessie-backports main\" >> /etc/apt/sources.list" && \
   apt-get update --yes && \
   apt-get install --no-install-recommends --yes \
     automake \
