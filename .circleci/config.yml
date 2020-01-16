@@ -37,10 +37,6 @@ jobs:
            make moxiebox-moxie
            tagged=$(docker images -q -f 'since=dockcross/moxiebox-moxie:latest' --format '{{.Repository}}:{{.Tag}}' | grep moxiebox-moxie)
            docker save -o ~/docker/moxiebox-moxie.tar dockcross/moxiebox-moxie:latest $tagged
-      - run:
-         name: moxiebox-moxie test
-         command: |
-           make moxiebox-moxie.test
       - save_cache:
           key: moxiebox-moxie-assets-{{ .Revision }}
           paths: ~/docker/moxiebox-moxie.tar
