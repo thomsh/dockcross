@@ -1,14 +1,14 @@
-FROM quay.io/pypa/manylinux1_x86_64:latest
+FROM quay.io/pypa/manylinux2014_x86_64@sha256:4a5b19c57f38f59a85da695948f55bd690198a88c0df9273383f4e3fbeb457ba
 MAINTAINER Matt McCormick "matt.mccormick@kitware.com"
 
-ENV DEFAULT_DOCKCROSS_IMAGE dockcross/manylinux1-x64
+ENV DEFAULT_DOCKCROSS_IMAGE dockcross/manylinux2014-x64
 
 #include "common.manylinux"
 
 #include "common.docker"
 
 ENV CROSS_TRIPLE x86_64-linux-gnu
-ENV CROSS_ROOT /opt/rh/devtoolset-2/root/usr/bin
+ENV CROSS_ROOT /opt/rh/devtoolset-8/root/usr/bin
 ENV AS=${CROSS_ROOT}/as \
     AR=${CROSS_ROOT}/ar \
     CC=${CROSS_ROOT}/gcc \
@@ -19,12 +19,12 @@ ENV AS=${CROSS_ROOT}/as \
 
 COPY linux-x64/${CROSS_TRIPLE}-noop.sh /usr/bin/${CROSS_TRIPLE}-noop
 
-COPY manylinux1-x64/Toolchain.cmake ${CROSS_ROOT}/../lib/
+COPY manylinux2014-x64/Toolchain.cmake ${CROSS_ROOT}/../lib/
 ENV CMAKE_TOOLCHAIN_FILE ${CROSS_ROOT}/../lib/Toolchain.cmake
 
 # Build-time metadata as defined at http://label-schema.org
 ARG BUILD_DATE
-ARG IMAGE=dockcross/manylinux1-x64
+ARG IMAGE=dockcross/manylinux2014-x64
 ARG VERSION=latest
 ARG VCS_REF
 ARG VCS_URL
